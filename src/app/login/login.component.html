@@ -1,0 +1,10 @@
+<section>
+  <form #loginForm="ngForm">
+    <label class="">username</label>
+    <input type="text" [(ngModel)]="authentication.username" #username="ngForm" />
+    <label class="">password</label>
+    <input type="text" [(ngModel)]="authentication.password" #password="ngForm" />
+    <button type="submit" (click)="onSubmit()">Login</button>
+    <label>{{currentUser.email}}</label>
+  </form>
+</section>
