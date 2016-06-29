@@ -1,0 +1,6 @@
+<section class="navbar-form navbar-right" *ngIf="user != undefined">
+  <div class="form-group">
+   <label class="profile-name">Welcome {{(user) ? user.username: ''}}</label>
+  </div>
+  <button (click)="onDisconnect()" class="btn btn-success btn-warning">Déconnexion</button>
+</section>

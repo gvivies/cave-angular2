@@ -1,0 +1,34 @@
+<h1>
+  Liste des bouteilles
+</h1>
+<app-bottle *ngIf="selectedItem" [template]="bottle" [item]="selectedItem"></app-bottle>
+
+<table class="table table-hover table-striped">
+  <th class="text-centered">Nom</th>
+  <th class="text-centered">Vin</th>
+  <th class="text-centered">Région</th>
+  <th class="text-centered">Type</th>
+  <th class="text-centered">Quantité</th>
+  <th class="text-centered">Millésime</th>
+  <th class="text-centered">A boire en</th>
+  <th class="text-centered">Jusqu'en</th>
+  <th></th>
+  <th></th>
+  <tr *ngFor="let bottle of bottles | NameSort:'name'">
+    <td>{{bottle.name}}</td>
+    <td>{{bottle.wine?.name}}</td>
+    <td>{{bottle.wine?.region?.name}}</td>
+    <td>{{bottle.classification?.name}}</td>
+    <td class="text-centered">{{bottle.quantity}}</td>
+    <td class="text-centered">{{bottle.year}}</td>
+    <td class="text-centered">{{bottle.yearMin}}</td>
+    <td class="text-centered">{{bottle.yearMax}}</td>
+    <td>
+        <span class="glyphicon glyphicon-pencil table-action" aria-hidden="true" (click)="update(bottle)" data-toggle="modal" data-target="#myModal"></span>
+    </td>
+    <td>
+        <span class="glyphicon glyphicon-trash table-action" aria-hidden="true" (click)="remove()"></span>
+    </td>
+  </tr>
+
+</table>

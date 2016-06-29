@@ -1,10 +1,9 @@
-<section>
-  <form #loginForm="ngForm">
-    <label class="">username</label>
-    <input type="text" [(ngModel)]="authentication.username" #username="ngForm" />
-    <label class="">password</label>
-    <input type="text" [(ngModel)]="authentication.password" #password="ngForm" />
-    <button type="submit" (click)="onSubmit()">Login</button>
-    <label>{{currentUser.email}}</label>
-  </form>
-</section>
+<form #loginForm="ngForm" *ngIf="!userLogged" class="navbar-form navbar-right">
+  <div class="form-group">
+    <input placeholder="Utilisateur" class="form-control" type="text" [(ngModel)]="authentication.username" #username="ngForm">
+  </div>
+  <div class="form-group">
+    <input placeholder="Mot de passe" class="form-control" type="password" [(ngModel)]="authentication.password" #password="ngForm">
+  </div>
+  <button type="submit" (click)="onSubmit()" class="btn btn-success">Connexion</button>
+</form>

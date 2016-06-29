@@ -9,25 +9,25 @@ import {
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { BottlesComponent } from './bottles.component';
+import { BottleComponent } from './bottle.component';
 
-describe('Component: Bottles', () => {
+describe('Component: Bottle', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [BottlesComponent]);
+  beforeEachProviders(() => [BottleComponent]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([BottlesComponent],
-      (component: BottlesComponent) => {
+  it('should inject the component', inject([BottleComponent],
+      (component: BottleComponent) => {
     expect(component).toBeTruthy();
   }));
 
   it('should create the component', inject([], () => {
-    return builder.createAsync(BottlesComponentTestController)
+    return builder.createAsync(BottleComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(BottlesComponent));
+        let query = fixture.debugElement.query(By.directive(BottleComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
@@ -37,10 +37,10 @@ describe('Component: Bottles', () => {
 @Component({
   selector: 'test',
   template: `
-    <app-bottles></app-bottles>
+    <app-bottle></app-bottle>
   `,
-  directives: [BottlesComponent]
+  directives: [BottleComponent]
 })
-class BottlesComponentTestController {
+class BottleComponentTestController {
 }
 

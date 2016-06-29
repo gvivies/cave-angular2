@@ -30,7 +30,13 @@ const barrels: string[] = [
   'app',
   'app/shared',
   'app/login',
+  'app/welcome',
+  'app/+bottles',
+  'app/profile',
+  'app/form',
+  'app/bottle',
   /** @cli-barrel */
+
 ];
 
 const cliSystemConfigPackages: any = {};

@@ -14,9 +14,4 @@ describe('App: CaveAngular2', () => {
       inject([CaveAngular2AppComponent], (app: CaveAngular2AppComponent) => {
     expect(app).toBeTruthy();
   }));
-
-  it('should have as title \'cave-angular2 works!\'',
-      inject([CaveAngular2AppComponent], (app: CaveAngular2AppComponent) => {
-    expect(app.title).toEqual('cave-angular2 works!');
-  }));
 });
