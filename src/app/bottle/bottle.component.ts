@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Bottle } from '../shared/model/bottle';
 import { Dealer } from '../shared/model/dealer';
 import { Wine } from '../shared/model/wine';
@@ -20,6 +20,8 @@ export class BottleComponent implements OnInit {
 
   @Input("item") item: any;
   @Input("add") add: boolean;
+
+  @Output("save") saveBottle = new EventEmitter();
 
   dealers: Dealer[];
   selectedDealer: Dealer;
@@ -93,13 +95,19 @@ export class BottleComponent implements OnInit {
     item.dealer = this.selectedDealer;
     item.classification = this.selectedClassification;
     if (this.add) {
-      this.crud.update('/api/bottles', item)
+      this.crud.create('/api/bottles', item)
       .subscribe(res => {
+        this.saveBottle.emit({
+          value: item
+        });
         this.ngOnChanges();
       });
     } else {
-      this.crud.create('/api/bottles', item)
+      this.crud.update('/api/bottles', item)
       .subscribe(res => {
+        this.saveBottle.emit({
+          value: item
+        });
         this.ngOnChanges();
       });
     }

@@ -6,6 +6,7 @@ import { environment } from '../environment';
 import { BottleComponent } from '../bottle/bottle.component';
 import { ArraySortPipe } from '../shared/pipes/array-sort-pipe.pipe';
 import { CrudService } from '../shared/services/crud.service';
+import { ToolsService } from '../shared/services/tools.service';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,7 @@ import { CrudService } from '../shared/services/crud.service';
   styleUrls: ['bottles.component.css'],
   directives: [BottleComponent],
   pipes: [ ArraySortPipe ],
-  providers: [ CrudService ]
+  providers: [ CrudService, ToolsService ]
 })
 export class BottlesComponent implements OnInit {
 
@@ -25,12 +26,14 @@ export class BottlesComponent implements OnInit {
   selectedItem: Bottle;
   addMode: boolean;
   crud: CrudService;
+  tools: ToolsService;
 
-  constructor(http: Http, sessionService: SessionService, crud: CrudService) {
+  constructor(http: Http, sessionService: SessionService, crud: CrudService, tools: ToolsService) {
     this.http = http;
     this.sessionService = sessionService;
     this.selectedItem = null;
     this.crud = crud;
+    this.tools = tools;
   }
 
   ngOnInit() {
@@ -40,7 +43,7 @@ export class BottlesComponent implements OnInit {
   }
 
   update(bottle) {
-    this.selectedItem = bottle;
+    this.selectedItem = this.tools.clone(bottle);
     this.addMode = false;
   }
 
@@ -54,7 +57,8 @@ export class BottlesComponent implements OnInit {
     if (confirm('Voulez-vous vraiment supprimer ces bouteilles ?')) {
       this.crud.remove('/api/bottles', bottle)
         .subscribe((res) => {
-
+          let idx = this.bottles.indexOf(bottle);
+          this.bottles.splice(idx, 1);
         });
     }
   }
@@ -62,5 +66,13 @@ export class BottlesComponent implements OnInit {
   refresh() {
     this.crud.list('/api/bottles')
       .subscribe(res => {this.bottles = res});
+  }
+
+  onSavedBottle($event) {
+    if (this.addMode) {
+      this.bottles.push($event.value);
+    } else {
+      this.selectedItem = $event.value;
+    }
   }
 }

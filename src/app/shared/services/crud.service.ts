@@ -53,7 +53,6 @@ export class CrudService {
   remove(url: string, item: any) : Observable<any> {
     return this.http.delete( //
       environment.endpoint + url+ '/'+ item.id, //
-      {headers : this.getHttpHeaders()}) //
-      .map(response => response.json());
+      {headers : this.getHttpHeaders()});
   }
 }
