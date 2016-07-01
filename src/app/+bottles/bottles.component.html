@@ -1,13 +1,16 @@
 <h1>
   Liste des bouteilles
 </h1>
-<app-bottle *ngIf="selectedItem" [template]="bottle" [item]="selectedItem"></app-bottle>
-
+<div class="command-bar">
+  <button type="button" class="btn btn-primary" (click)="create()" data-toggle="modal" data-target="#myModal">Ajouter des bouteilles</button>
+  <button type="button" class="btn " (click)="refresh()" >Rafraichir</button>
+</div>
+<app-bottle *ngIf="selectedItem" [add]="addMode" [item]="selectedItem"></app-bottle>
 <table class="table table-hover table-striped">
-  <th class="text-centered">Nom</th>
-  <th class="text-centered">Vin</th>
-  <th class="text-centered">Région</th>
-  <th class="text-centered">Type</th>
+  <th class="col-header">Nom</th>
+  <th class="col-header">Vin</th>
+  <th class="col-header">Région</th>
+  <th class="col-header">Type</th>
   <th class="text-centered">Quantité</th>
   <th class="text-centered">Millésime</th>
   <th class="text-centered">A boire en</th>
@@ -27,7 +30,7 @@
         <span class="glyphicon glyphicon-pencil table-action" aria-hidden="true" (click)="update(bottle)" data-toggle="modal" data-target="#myModal"></span>
     </td>
     <td>
-        <span class="glyphicon glyphicon-trash table-action" aria-hidden="true" (click)="remove()"></span>
+        <span class="glyphicon glyphicon-trash table-action" aria-hidden="true" (click)="remove(bottle)"></span>
     </td>
   </tr>
 

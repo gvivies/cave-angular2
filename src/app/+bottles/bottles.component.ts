@@ -5,6 +5,7 @@ import { Bottle } from '../shared/model/bottle';
 import { environment } from '../environment';
 import { BottleComponent } from '../bottle/bottle.component';
 import { ArraySortPipe } from '../shared/pipes/array-sort-pipe.pipe';
+import { CrudService } from '../shared/services/crud.service';
 
 @Component({
   moduleId: module.id,
@@ -12,7 +13,8 @@ import { ArraySortPipe } from '../shared/pipes/array-sort-pipe.pipe';
   templateUrl: 'bottles.component.html',
   styleUrls: ['bottles.component.css'],
   directives: [BottleComponent],
-  pipes: [ ArraySortPipe ]
+  pipes: [ ArraySortPipe ],
+  providers: [ CrudService ]
 })
 export class BottlesComponent implements OnInit {
 
@@ -21,34 +23,44 @@ export class BottlesComponent implements OnInit {
   sessionService: SessionService;
   bottles: Bottle[];
   selectedItem: Bottle;
+  addMode: boolean;
+  crud: CrudService;
 
-  constructor(http: Http, sessionService: SessionService) {
+  constructor(http: Http, sessionService: SessionService, crud: CrudService) {
     this.http = http;
     this.sessionService = sessionService;
     this.selectedItem = null;
+    this.crud = crud;
   }
 
   ngOnInit() {
     if (this.sessionService.getCurrentUser()) {
-      this.headers = new Headers();
-      this.headers.append('Content-Type', 'application/json');
-      this.headers.append('X-Requested-With', 'XMLHttpRequest');
-      this.headers.append('authorization', 'Bearer ' + this.sessionService.getCurrentUser().token);
-      this.headers.append('user-id', this.sessionService.getCurrentUser().id);
-
-      this.http.get( //
-        environment.endpoint + '/api/bottles', //
-        {headers : this.headers}) //
-        .map(response => response.json()) //
-        .subscribe(res => {this.bottles = res});
-      }
-    }
-
-    update(bottle) {
-      this.selectedItem = bottle;
-    }
-
-    remove() {
-
+      this.refresh();
     }
   }
+
+  update(bottle) {
+    this.selectedItem = bottle;
+    this.addMode = false;
+  }
+
+  create() {
+    this.selectedItem = new Bottle();
+    this.selectedItem.ownedBy = this.sessionService.getCurrentUser().id;
+    this.addMode = true;
+  }
+
+  remove(bottle) {
+    if (confirm('Voulez-vous vraiment supprimer ces bouteilles ?')) {
+      this.crud.remove('/api/bottles', bottle)
+        .subscribe((res) => {
+
+        });
+    }
+  }
+
+  refresh() {
+    this.crud.list('/api/bottles')
+      .subscribe(res => {this.bottles = res});
+  }
+}

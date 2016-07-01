@@ -4,3 +4,12 @@
 .text-centered {
   text-align: center;
 }
+.command-bar {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: -52px;
+  margin-bottom: 32px;
+}
+.col-header {
+  padding-left: 8px;
+}

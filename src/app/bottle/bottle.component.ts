@@ -6,18 +6,20 @@ import { Region } from '../shared/model/region';
 import { Classification } from '../shared/model/classification';
 import { Containing } from '../shared/model/containing';
 import { CrudService } from '../shared/services/crud.service';
+import { ToolsService } from '../shared/services/tools.service';
+import { SessionService } from '../shared/services/session.service';
 
 @Component({
   moduleId: module.id,
   selector: 'app-bottle',
   templateUrl: 'bottle.component.html',
   styleUrls: ['bottle.component.css'],
-  providers: [CrudService]
+  providers: [CrudService, ToolsService]
 })
 export class BottleComponent implements OnInit {
 
   @Input("item") item: any;
-  @Input("template") template: string;
+  @Input("add") add: boolean;
 
   dealers: Dealer[];
   selectedDealer: Dealer;
@@ -28,29 +30,42 @@ export class BottleComponent implements OnInit {
   containings: string[];
   selectedContaining: string;
   crud: CrudService;
+  tools: ToolsService;
+  sessionService: SessionService;
+  formTitle: string;
 
-  constructor(crud: CrudService) {
+  constructor(crud: CrudService, tools: ToolsService, sessionService: SessionService) {
     this.crud = crud;
+    this.tools = tools;
+    this.sessionService = sessionService;
   }
 
   ngOnInit() {
     this.initFormLists();
+    if (this.item) {
+      this.formTitle = ((this.add) ? 'Création de bouteilles' : 'Détail de ' + this.item.name);
+    }
   }
 
   ngOnChanges() {
-    let idx = this.getSelected(this.item.dealer, this.dealers);
-    if (idx > -1) {
-      this.selectedDealer = this.dealers[idx];
+    if (!this.add) {
+      let idx = this.getSelected(this.item.dealer, this.dealers);
+      if (idx > -1) {
+        this.selectedDealer = this.dealers[idx];
+      }
+      idx = this.getSelected(this.item.wine, this.wines);
+      if (idx > -1) {
+        this.selectedWine = this.wines[idx];
+      }
+      idx = this.getSelected(this.item.classification, this.classifications);
+      if (idx > -1) {
+        this.selectedClassification = this.classifications[idx];
+      }
+      this.selectedContaining = Containing[this.item.containing];
+      this.formTitle = 'Détail de ' + this.item.name;
+    } else {
+      this.formTitle = 'Création de bouteilles';
     }
-    idx = this.getSelected(this.item.wine, this.wines);
-    if (idx > -1) {
-      this.selectedWine = this.wines[idx];
-    }
-    idx = this.getSelected(this.item.classification, this.classifications);
-    if (idx > -1) {
-      this.selectedClassification = this.classifications[idx];
-    }
-    this.selectedContaining = Containing[this.item.containing];
   }
 
   initFormLists() {
@@ -72,12 +87,23 @@ export class BottleComponent implements OnInit {
     this.containings = Object.keys(Containing).map(k => Containing[k]).filter(v => typeof v === "string");
   }
 
-  update(item: Bottle) {
+  save(item: Bottle) {
     item.containing = Containing[this.selectedContaining];
-    this.crud.update('/api/bottles', item)
-    .subscribe(res => {
-      this.ngOnChanges();
-    });
+    item.wine = this.selectedWine;
+    item.dealer = this.selectedDealer;
+    item.classification = this.selectedClassification;
+    if (this.add) {
+      this.crud.update('/api/bottles', item)
+      .subscribe(res => {
+        this.ngOnChanges();
+      });
+    } else {
+      this.crud.create('/api/bottles', item)
+      .subscribe(res => {
+        this.ngOnChanges();
+      });
+    }
+
   }
 
   getSelected(item: any, items: any[]): number {

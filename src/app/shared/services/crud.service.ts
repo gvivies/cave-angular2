@@ -42,4 +42,18 @@ export class CrudService {
       .map(response => response.json());
   }
 
+  create(url: string, item: any) : Observable<any> {
+    return this.http.post( //
+      environment.endpoint + url, //
+      item, //
+      {headers : this.getHttpHeaders()}) //
+      .map(response => response.json());
+  }
+
+  remove(url: string, item: any) : Observable<any> {
+    return this.http.delete( //
+      environment.endpoint + url+ '/'+ item.id, //
+      {headers : this.getHttpHeaders()}) //
+      .map(response => response.json());
+  }
 }
