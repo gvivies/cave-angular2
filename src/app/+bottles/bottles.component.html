@@ -12,6 +12,7 @@
   <th class="col-header">Région</th>
   <th class="col-header">Type</th>
   <th class="text-centered">Quantité</th>
+  <th></th>
   <th class="text-centered">Millésime</th>
   <th class="text-centered">A boire en</th>
   <th class="text-centered">Jusqu'en</th>
@@ -23,14 +24,17 @@
     <td>{{bottle.wine?.region?.name}}</td>
     <td>{{bottle.classification?.name}}</td>
     <td class="text-centered">{{bottle.quantity}}</td>
+    <td class="table-action" aria-hidden="true" (click)="drinkOne(bottle)">
+      <span class="glyphicon glyphicon-glass"></span>
+    </td>
     <td class="text-centered">{{bottle.year}}</td>
     <td class="text-centered">{{bottle.yearMin}}</td>
     <td class="text-centered">{{bottle.yearMax}}</td>
-    <td>
-        <span class="glyphicon glyphicon-pencil table-action" aria-hidden="true" (click)="update(bottle)" data-toggle="modal" data-target="#myModal"></span>
+    <td class="table-action" aria-hidden="true" (click)="update(bottle)" data-toggle="modal" data-target="#myModal">
+        <span class="glyphicon glyphicon-pencil"></span>
     </td>
-    <td>
-        <span class="glyphicon glyphicon-trash table-action" aria-hidden="true" (click)="remove(bottle)"></span>
+    <td class="table-action" aria-hidden="true" (click)="remove(bottle)">
+        <span class="glyphicon glyphicon-trash" ></span>
     </td>
   </tr>
 

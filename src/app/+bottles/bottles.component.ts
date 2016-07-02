@@ -75,4 +75,13 @@ export class BottlesComponent implements OnInit {
       this.selectedItem = $event.value;
     }
   }
+
+  drinkOne(bottle) {
+    if (confirm('Voulez-vous vraiment boire une bouteille ?')) {
+      this.crud.update('/api/bottles/drink', bottle)
+        .subscribe((res) => {
+          bottle.quantity = res.quantity;
+        });
+    }
+  }
 }
