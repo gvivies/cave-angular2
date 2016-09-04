@@ -1,46 +1,13 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+/* tslint:disable:no-unused-variable */
+
+import { By }           from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { addProviders, async, inject } from '@angular/core/testing';
 import { WelcomeComponent } from './welcome.component';
 
 describe('Component: Welcome', () => {
-  let builder: TestComponentBuilder;
-
-  beforeEachProviders(() => [WelcomeComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
-    builder = tcb;
-  }));
-
-  it('should inject the component', inject([WelcomeComponent],
-      (component: WelcomeComponent) => {
+  it('should create an instance', () => {
+    let component = new WelcomeComponent();
     expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(WelcomeComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(WelcomeComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
-  }));
+  });
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-welcome></app-welcome>
-  `,
-  directives: [WelcomeComponent]
-})
-class WelcomeComponentTestController {
-}
-

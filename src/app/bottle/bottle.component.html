@@ -1,6 +1,6 @@
 <div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
-    <form #loginForm="ngForm" class="modal-content">
+    <form #bottleForm="ngForm" class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">{{formTitle}}</h4>
@@ -8,12 +8,12 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="name">Nom</label>
-          <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="item.name" #name="ngForm">
+          <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="item.name" name="name" >
         </div>
         <div class="form-inline">
           <div class="form-group width-50">
             <label class="width-50" for="wine">Appellation</label>
-            <select id="wine" class="form-control width-50" [(ngModel)]="selectedWine" >
+            <select id="wine" class="form-control width-50" [(ngModel)]="selectedWine" name="selectedWine">
               <option *ngFor="let wine of wines" [ngValue]="wine">{{wine.name}}</option>
             </select>
             <div class="form-group width-50">
@@ -23,61 +23,61 @@
           </div>
           <div class="form-group width-25">
             <label class="width-50" for="year">Millésime</label>
-            <input type="number" class="form-control width-50" id="year" placeholder="" [(ngModel)]="item.year" #year="ngForm">
+            <input type="number" class="form-control width-50" [(ngModel)]="item.year" name="year">
           </div>
         </div>
         <div class="form-inline">
           <div class="form-group width-20">
             <label class="width-50" for="classification">Type</label>
-            <select id="classification" class="form-control width-50" [(ngModel)]="selectedClassification">
+            <select id="classification" class="form-control width-50" [(ngModel)]="selectedClassification" name="selectedClassification">
               <option *ngFor="let classification of classifications" [ngValue]="classification">{{classification?.name}}</option>
             </select>
           </div>
           <div class="form-group width-20">
             <label class="width-50" for="quantity">Quantité</label>
-            <input type="number" class="form-control width-50" id="quantity" placeholder="" [(ngModel)]="item.quantity" #quantity="ngForm">
+            <input type="number" class="form-control width-50" [(ngModel)]="item.quantity" name="quantity">
           </div>
         </div>
         <div class="form-inline">
           <div class="form-group width-50">
             <label class="width-50" for="yearmin">A boire à partir de</label>
-            <input type="number" class="form-control width-50" id="yearmin" placeholder="" [(ngModel)]="item.yearMin" #yearMin="ngForm">
+            <input type="number" class="form-control width-50" [(ngModel)]="item.yearMin" name="yearMin">
           </div>
           <div class="form-group width-30">
             <label class="width-50" for="yearmax">Jusqu'en</label>
-            <input type="number" class="form-control width-50" id="yearmax" placeholder="" [(ngModel)]="item.yearMax" #yearMax="ngForm">
+            <input type="number" class="form-control width-50" [(ngModel)]="item.yearMax" name="yearMax">
           </div>
         </div>
         <div class="form-group">
           <label for="dealer">Dealer</label>
-          <select id="dealer" class="form-control" [(ngModel)]="selectedDealer" >
+          <select id="dealer" class="form-control" [(ngModel)]="selectedDealer" name="selectedDealer">
             <option *ngFor="let dealer of dealers" [ngValue]="dealer">{{dealer?.name}}</option>
           </select>
         </div>
         <div class="form-inline">
           <div class="form-group width-50">
             <label class="width-50" for="purchaseDate">Achetées le</label>
-            <input type="date" class="form-control width-50" id="purchaseDate" placeholder="" [(ngModel)]="item.purchaseDate" #purchaseDate="ngForm">
+            <input type="date" class="form-control width-50" [(ngModel)]="item.purchaseDate" name="purchaseDate">
           </div>
           <div class="form-group width-50">
             <label class="width-50" for="price">Prix</label>
-            <input type="number" class="form-control width-50" id="price" placeholder="" [(ngModel)]="item.price" #price="ngForm">
+            <input type="number" class="form-control width-50" [(ngModel)]="item.price" name="price">
           </div>
         </div>
         <div class="form-group">
           <label for="comment">Commentaire</label>
-          <input type="text" class="form-control" id="comment" placeholder="" [(ngModel)]="item.comment" #comment="ngForm">
+          <input type="text" class="form-control" [(ngModel)]="item.comment" name="comment">
         </div>
         <div class="form-inline">
           <div class="form-group width-50">
             <label class="width-50" for="containing">Contenant</label>
-            <select id="containing" class="form-control" [(ngModel)]="selectedContaining" >
+            <select id="containing" class="form-control" [(ngModel)]="selectedContaining" name="selectedContaining" >
               <option *ngFor="let containing of containings" [ngValue]="containing">{{containing}}</option>
             </select>
           </div>
           <div class="form-group width-50">
             <label class="width-50" for="ordered">En commande</label>
-            <input type="checkbox" class="form-control width-50" id="ordered" placeholder="" [(ngModel)]="item.ordered" #ordered="ngForm">
+            <input type="checkbox" class="form-control width-50" [(ngModel)]="item.ordered" name="ordered">
           </div>
         </div>
 

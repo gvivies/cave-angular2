@@ -10,11 +10,10 @@ import { ToolsService } from '../shared/services/tools.service';
 import { SessionService } from '../shared/services/session.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-bottle',
   templateUrl: 'bottle.component.html',
   styleUrls: ['bottle.component.css'],
-  providers: [CrudService, ToolsService]
+    providers: [CrudService, ToolsService]
 })
 export class BottleComponent implements OnInit {
 

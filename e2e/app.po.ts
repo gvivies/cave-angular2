@@ -1,9 +1,9 @@
-export class CaveAngular2Page {
+export class CaveNg2Page {
   navigateTo() {
     return browser.get('/');
   }
 
   getParagraphText() {
-    return element(by.css('cave-angular2-app h1')).getText();
+    return element(by.css('app-root h1')).getText();
   }
 }

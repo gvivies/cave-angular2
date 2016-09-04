@@ -2,19 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { User } from '../model/user';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/map';
 import { SessionService } from './session.service';
 
 @Injectable()
 export class CrudService {
 
-  private sessionService: SessionService;
-  private http: Http;
 
-  constructor(sessionService: SessionService, http: Http) {
-    this.sessionService = sessionService;
-    this.http = http;
+  constructor(private sessionService: SessionService, private http: Http) {
   }
 
   getHttpHeaders(): Headers {
@@ -27,9 +23,10 @@ export class CrudService {
   }
 
   list(url: string): Observable<any> {
+
     return this.http.get( //
       environment.endpoint + url, //
-      {headers : this.getHttpHeaders()}) //
+      { headers : this.getHttpHeaders(), body: '' }) // //
       .map(response => response.json());
 
   }

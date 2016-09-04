@@ -2,24 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { SessionService } from '../shared/services/session.service';
 import { Bottle } from '../shared/model/bottle';
-import { environment } from '../environment';
+import { environment } from '../environments/environment';
 import { BottleComponent } from '../bottle/bottle.component';
 import { ArraySortPipe } from '../shared/pipes/array-sort-pipe.pipe';
 import { CrudService } from '../shared/services/crud.service';
 import { ToolsService } from '../shared/services/tools.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-bottles',
   templateUrl: 'bottles.component.html',
   styleUrls: ['bottles.component.css'],
   directives: [BottleComponent],
-  pipes: [ ArraySortPipe ],
-  providers: [ CrudService, ToolsService ]
+  pipes: [ ArraySortPipe ] //,
+  //providers: [ CrudService, ToolsService ]
 })
 export class BottlesComponent implements OnInit {
 
-  http: Http;
   headers: Headers;
   sessionService: SessionService;
   bottles: Bottle[];
@@ -28,8 +26,7 @@ export class BottlesComponent implements OnInit {
   crud: CrudService;
   tools: ToolsService;
 
-  constructor(http: Http, sessionService: SessionService, crud: CrudService, tools: ToolsService) {
-    this.http = http;
+  constructor(private http: Http, sessionService: SessionService, crud: CrudService, tools: ToolsService) {
     this.sessionService = sessionService;
     this.selectedItem = null;
     this.crud = crud;
@@ -84,4 +81,5 @@ export class BottlesComponent implements OnInit {
         });
     }
   }
+
 }
