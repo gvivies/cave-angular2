@@ -4,11 +4,9 @@ import { Router } from '@angular/router';
 import { Authent } from '../shared/model/authent';
 import { User } from '../shared/model/user';
 import { Http, Headers} from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { environment } from '../environments/environment';
 import 'rxjs/add/operator/map';
 import { SessionService } from '../shared/services/session.service';
-//import { FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +16,7 @@ import { SessionService } from '../shared/services/session.service';
 @Injectable()
 export class LoginComponent implements OnInit {
 
-
     authentication: Authent;
-    //loginForm: ControlGroup;
     http: Http;
     headers: Headers;
     currentUser: User;
@@ -29,14 +25,12 @@ export class LoginComponent implements OnInit {
     sessionService: SessionService;
     router: Router;
 
-    //constructor(http: Http, sessionService: SessionService, router: Router, formBuilder: FormBuilder) {
     constructor(http: Http, sessionService: SessionService, router: Router) {
 
       this.http = http;
       this.sessionService = sessionService;
       this.router = router;
-
-      this.authentication = new Authent('','');
+      this.authentication = new Authent('', '');
       this.headers = new Headers();
       this.headers.append('Content-Type', 'application/json');
       this.headers.append('X-Requested-With', 'XMLHttpRequest');
@@ -46,10 +40,10 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-      let basicAuth, headers, authent;
-      basicAuth = "Basic " + //
-      btoa(this.authentication.username + ":" + this.authentication.password);
-      authent = '{ "auth": "'+ basicAuth + '"}';
+      let basicAuth, authent;
+      basicAuth = 'Basic ' + //
+      btoa(this.authentication.username + ':' + this.authentication.password);
+      authent = '{ "auth": "' + basicAuth + '"}';
 
       this.log(authent).subscribe(user => {
         this.currentUser = user;
@@ -65,7 +59,7 @@ export class LoginComponent implements OnInit {
 
     log(authent: string) {
       return this.http.post( //
-        environment.endpoint+ '/login',
+        environment.endpoint + '/login',
         authent, //
         {headers : this.headers}).map(response => response.json());
       }

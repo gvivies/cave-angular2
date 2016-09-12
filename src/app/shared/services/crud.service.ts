@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { User } from '../model/user';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/map';
@@ -8,7 +7,6 @@ import { SessionService } from './session.service';
 
 @Injectable()
 export class CrudService {
-
 
   constructor(private sessionService: SessionService, private http: Http) {
   }
@@ -31,7 +29,7 @@ export class CrudService {
 
   }
 
-  update(url: string, item: any) : Observable<any> {
+  update(url: string, item: any): Observable<any> {
     return this.http.put( //
       environment.endpoint + url, //
       item, //
@@ -39,7 +37,7 @@ export class CrudService {
       .map(response => response.json());
   }
 
-  create(url: string, item: any) : Observable<any> {
+  create(url: string, item: any): Observable<any> {
     return this.http.post( //
       environment.endpoint + url, //
       item, //
@@ -47,9 +45,9 @@ export class CrudService {
       .map(response => response.json());
   }
 
-  remove(url: string, item: any) : Observable<any> {
+  remove(url: string, item: any): Observable<any> {
     return this.http.delete( //
-      environment.endpoint + url+ '/'+ item.id, //
+      environment.endpoint + url + '/' + item.id, //
       {headers : this.getHttpHeaders()});
   }
 }

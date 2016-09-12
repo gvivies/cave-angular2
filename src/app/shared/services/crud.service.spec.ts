@@ -1,16 +1,18 @@
-import {
-  beforeEachProviders,
-  it,
-  describe,
-  expect,
-  inject
-} from '@angular/core/testing';
+import { addProviders, inject } from '@angular/core/testing';
 import { CrudService } from './crud.service';
+import { SessionService } from './session.service';
+import { MockBackend } from '@angular/http/testing';
+import { Http, BaseRequestOptions } from '@angular/http';
 
 describe('Crud Service', () => {
-  beforeEachProviders(() => [CrudService]);
+  beforeEach(() => {
+    addProviders([CrudService, SessionService, MockBackend, BaseRequestOptions,
+    { provide: Http, useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
+          return new Http(backend, defaultOptions);
+        },  deps: [MockBackend, BaseRequestOptions]}]);
+  });
 
-  it('should ...',
+  it('should init as well',
       inject([CrudService], (service: CrudService) => {
     expect(service).toBeTruthy();
   }));

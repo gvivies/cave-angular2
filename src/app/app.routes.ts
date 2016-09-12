@@ -1,6 +1,5 @@
 import { Routes, RouterModule }   from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
-import { HeaderComponent } from './header';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { BottlesComponent } from './bottles/bottles.component';
 

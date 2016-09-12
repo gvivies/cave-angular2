@@ -1,5 +1,5 @@
 export enum Containing {
-	Bouteille,
-	DemiBouteille,
-	Magnum
+ Bouteille,
+ DemiBouteille,
+ Magnum
 }

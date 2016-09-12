@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { SessionService } from '../shared/services/session.service';
 import { Bottle } from '../shared/model/bottle';
-import { environment } from '../environments/environment';
 import { BottleComponent } from '../bottle/bottle.component';
 import { ArraySortPipe } from '../shared/pipes/array-sort-pipe.pipe';
 import { CrudService } from '../shared/services/crud.service';
@@ -13,8 +12,7 @@ import { ToolsService } from '../shared/services/tools.service';
   templateUrl: 'bottles.component.html',
   styleUrls: ['bottles.component.css'],
   directives: [BottleComponent],
-  pipes: [ ArraySortPipe ] //,
-  //providers: [ CrudService, ToolsService ]
+  pipes: [ ArraySortPipe ]
 })
 export class BottlesComponent implements OnInit {
 
@@ -62,7 +60,7 @@ export class BottlesComponent implements OnInit {
 
   refresh() {
     this.crud.list('/api/bottles')
-      .subscribe(res => {this.bottles = res});
+      .subscribe(res => { this.bottles = res; });
   }
 
   onSavedBottle($event) {

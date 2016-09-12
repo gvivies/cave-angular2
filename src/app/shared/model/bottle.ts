@@ -1,5 +1,4 @@
 import { Dealer } from './dealer';
-import { Region } from './region';
 import { Classification } from './classification';
 import { Wine } from './wine';
 import { Containing } from './containing';

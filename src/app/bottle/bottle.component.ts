@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Bottle } from '../shared/model/bottle';
 import { Dealer } from '../shared/model/dealer';
 import { Wine } from '../shared/model/wine';
-import { Region } from '../shared/model/region';
 import { Classification } from '../shared/model/classification';
 import { Containing } from '../shared/model/containing';
 import { CrudService } from '../shared/services/crud.service';
@@ -13,14 +12,14 @@ import { SessionService } from '../shared/services/session.service';
   selector: 'app-bottle',
   templateUrl: 'bottle.component.html',
   styleUrls: ['bottle.component.css'],
-    providers: [CrudService, ToolsService]
+  providers: [CrudService, ToolsService]
 })
-export class BottleComponent implements OnInit {
+export class BottleComponent implements OnInit, OnChanges {
 
-  @Input("item") item: any;
-  @Input("add") add: boolean;
-
-  @Output("save") saveBottle = new EventEmitter();
+  @Input('item') item: any;
+  @Input('add') add: boolean;
+  // @Output('save') saveBottle = new EventEmitter();
+  @Output() saveBottle = new EventEmitter();
 
   dealers: Dealer[];
   selectedDealer: Dealer;
@@ -85,7 +84,7 @@ export class BottleComponent implements OnInit {
       this.classifications = res;
       this.ngOnChanges();
     });
-    this.containings = Object.keys(Containing).map(k => Containing[k]).filter(v => typeof v === "string");
+    this.containings = Object.keys(Containing).map(k => Containing[k]).filter(v => typeof v === 'string');
   }
 
   save(item: Bottle) {
